@@ -5,7 +5,7 @@
 {% block  content %}
 
     <div class="select2-container"></div>
-        <h1>Подписаться под постом</h1>
+        <h1>Subscribe</h1>
         <div class="error">
         {{ form.errors }}
         {{ errors }}
@@ -13,7 +13,7 @@
         </div>
 
         <div class="payload">
-            <form action="{% url "posts_subscribe" %}" method="post">
+            <form action="{% url "author_subscribe" %}" method="post">
                 {% csrf_token %}
                 {{form.email_to}}
                 <br>

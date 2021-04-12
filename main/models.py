@@ -27,6 +27,7 @@ class Subscriber(models.Model):
     class Meta:
         """Meta class."""
 
+        unique_together = ['email_to', 'author_id']
         db_table = "tbl_subscribers"
         verbose_name = "Subscriber"
         verbose_name_plural = "Subsribers"
