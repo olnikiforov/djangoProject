@@ -42,8 +42,6 @@ class LogMiddleware:
 
     def __call__(self, request):
         """Make a logging."""
-        logger = Logger()
-        logger.save()
         response = self.get_response(request)
         if request.method == "GET":
             st = time()

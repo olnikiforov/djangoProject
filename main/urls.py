@@ -22,6 +22,9 @@ urlpatterns = [
 
     path('author/subscribers/notify', views.subscribers_notify, name='subscribers_notify'),
 
+    path('books/all/', views.books, name='books'),
+    path('categories/all/', views.categories, name='categories'),
+
     path('api/post', views.post_api, name='api_post'),
     path('api/subscribe', views.api_subscribe, name='api_subscribe'),
     path('api/authors/new', views.api_authors_new, name='api_authors_new'),
