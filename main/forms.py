@@ -1,8 +1,8 @@
 """Forms for site."""
 from django import forms
-from django.forms import ModelForm, Textarea, TextInput
+from django.forms import ModelForm, Select, Textarea, TextInput
 
-from .models import Author, Post, Subscriber
+from .models import Author, Comments, Post, Subscriber
 
 
 class PostForm(ModelForm):
@@ -50,4 +50,27 @@ class SubscriberForm(ModelForm):
                 "class": "form-control",
                 "placeholder": "Email подписчика "
             }),
+        }
+
+
+class CommentsForm(ModelForm):
+    """Comments model form."""
+
+    class Meta:
+        """Meta Class."""
+
+        model = Comments
+        fields = ['body', 'subs_id']
+        widgets = {
+            "body": TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Comment"
+            }
+
+            ),
+            "subs_id": Select(attrs={
+                "class": "form-control",
+                "placeholder": "subscriber ID"
+            }),
+
         }

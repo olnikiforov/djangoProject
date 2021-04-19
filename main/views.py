@@ -5,7 +5,7 @@ from faker import Faker
 from main.forms import PostForm, SubscriberForm
 from main.models import Author, Post, Subscriber
 from main.notify_service import notify
-from main.post_service import post_all, post_find
+from main.post_service import comment_method, post_all, post_find
 from main.subscribe_service import subscribe
 
 
@@ -21,8 +21,7 @@ def about(request):
 
 def posts(request):
     """Show all posts."""
-    _posts = Post.objects.all()
-    return render(request, "main/posts.html", {'title': "Posts", "posts": _posts})
+    return render(request, "main/posts.html", {'title': "Posts", "posts": post_all()})
 
 
 def post_create(request):
@@ -67,7 +66,9 @@ def post_update(request, post_id):
 def post_show(request, post_id):
     """Show post by ID."""
     pst = post_find(post_id)
-    return render(request, "main/post_show.html", {"title": pst.title, "pst": pst})
+    comment_form, comments = comment_method(pst, request)
+    return render(request, "main/post_show.html",
+                  {"title": pst.title, "pst": pst, "comments": comments, "comment_form": comment_form})
 
 
 def post_api(request):
