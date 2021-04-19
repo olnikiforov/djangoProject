@@ -1,4 +1,4 @@
-""""Celery tasks."""
+"""Celery tasks."""
 from datetime import timedelta
 
 from celery import shared_task
@@ -15,6 +15,7 @@ def delete_logs():
 
 @shared_task
 def notify_on_subscription(email_to):
+    """Notify on subscription."""
     email_send(email_to)
 
 

@@ -140,7 +140,6 @@ def subscribers_notify(request):
     return redirect('homepage')
 
 
-
 def api_subscribe(request):
     """Route Subscribers API."""
     author_id = request.GET["author_id"]
