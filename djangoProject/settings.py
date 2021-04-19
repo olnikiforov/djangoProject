@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -124,3 +126,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Celery
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+CELERY_TIMEZONE = 'Europe/Kiev'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CELERY_BEAT_SCHEDULE = {
+    'delete_logs_async': {
+        'task': 'main.tasks.delete_logs',
+        'schedule': crontab(minute=0, hour=1),
+    },
+    'notify_subscribers': {
+        'task': 'main.tasks.subscribers_notify',
+        'schedule': crontab(minute=0, hour=9),
+    },
+}

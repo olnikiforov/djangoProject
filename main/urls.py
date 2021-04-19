@@ -20,6 +20,8 @@ urlpatterns = [
     path('author/subscribe', views.author_subscribe, name='author_subscribe'),
     path('author/subscribers/all', views.author_subscribers_all, name='author_subscribers_all'),
 
+    path('author/subscribers/notify', views.subscribers_notify, name='subscribers_notify'),
+
     path('api/post', views.post_api, name='api_post'),
     path('api/subscribe', views.api_subscribe, name='api_subscribe'),
     path('api/authors/new', views.api_authors_new, name='api_authors_new'),
