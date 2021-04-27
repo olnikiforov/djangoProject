@@ -14,11 +14,21 @@ class Author(models.Model):
         verbose_name = "Author"
         verbose_name_plural = "Authors"
     name = models.CharField("Author name", max_length=100)
+    last_name = models.CharField("Author surname", max_length=100, blank=True)
     email = models.EmailField("Email", max_length=50)
 
     def __str__(self):
         """Print method."""
         return self.name
+
+    def get_full_name(self):
+        """Make full name."""
+        return f'{self.name} {self.last_name}'
+
+    @property
+    def full_name(self):
+        """Print full name."""
+        return f'{self.name} {self.last_name}'
 
 
 class Subscriber(models.Model):
@@ -58,3 +68,43 @@ class Post(models.Model):
     def __str__(self):
         """Print method."""
         return self.title
+
+
+class Logger(models.Model):
+    """Logger class."""
+
+    class Meta:
+        """Meta class."""
+
+        db_table = "tb_loggers"
+
+    utm = models.CharField("UTM ", max_length=50)
+    time_execution = models.CharField("Time execute ", max_length=70)
+    created = models.DateTimeField(auto_now_add=True)
+    path = models.CharField("Path", max_length=70)
+    user_ip = models.CharField("User IP", max_length=20)
+
+    def __str__(self):
+        """Print method."""
+        return self.utm
+
+
+class Comments(models.Model):
+    """Set comments model in database."""
+
+    class Meta:
+        """Special Meta class to define database and post ordering by created."""
+
+        db_table = "tb_comments"
+        ordering = ("created",)
+
+    post = models.ForeignKey("Post", related_name="comments", on_delete=models.CASCADE)
+    body = models.TextField("Comment")
+    subs_id = models.ForeignKey("Subscriber", on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(default=now)
+    activate = models.BooleanField(default=True)
+
+    def __str__(self):
+        """Set method of printing."""
+        return "Comment by {} on {}".format(self.subs_id, self.post)
