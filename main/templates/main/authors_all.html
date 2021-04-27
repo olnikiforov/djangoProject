@@ -5,15 +5,29 @@
     <div class="container">
         <h1>{{ title }}</h1>
         <div class="payload">
-            <ul>
-                {% for author in authors %}
-                <li class="row">
-                    <b># {{ author.id }} {{ author.name }} {{ author.last_name }}</b> <span class="grey">[{{ author.email }}]</span>
+        <table class="table table-hover table-sm">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Total amount of books</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for author in authors %}
+            <tr>
+                <td>{{ author.id }}</td>
+                <td>{{ author.name }}</td>
+                <td>{{ author.last_name }}</td>
+                <td>{{ author.email }}</td>
+                <td>{{ author.books.count }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-                </li>
-                <hr>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 {% endblock %}

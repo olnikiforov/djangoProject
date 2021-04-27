@@ -108,3 +108,25 @@ class Comments(models.Model):
     def __str__(self):
         """Set method of printing."""
         return "Comment by {} on {}".format(self.subs_id, self.post)
+
+
+class Book(models.Model):
+    """Class books."""
+
+    title = models.CharField('Title', max_length=60)
+    author = models.ForeignKey('Author', models.CASCADE, related_name='books')
+    category = models.ForeignKey('Category', models.CASCADE, related_name='books')
+
+    def __str__(self):
+        """Print method."""
+        return self.title
+
+
+class Category(models.Model):
+    """Class Category."""
+
+    name = models.CharField("Category name: ", max_length=60)
+
+    def __str__(self):
+        """Print method."""
+        return self.name
