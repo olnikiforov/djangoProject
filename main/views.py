@@ -1,4 +1,6 @@
 """All wiews of site."""
+from time import time
+
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from faker import Faker
@@ -7,6 +9,7 @@ from main.models import Author, Post, Subscriber
 from main.notify_service import notify
 from main.post_service import comment_method, post_all, post_find
 from main.subscribe_service import subscribe
+from main.tasks import notify_on_subscription, notify_subs
 
 
 def index(request):
@@ -89,15 +92,22 @@ def subscribe_notify(author_id, email_to):
 def author_subscribe(request):
     """Subscribe on Author."""
     errors = ''
+    sub_success = False
+    email_to = request.POST.get('email_to')
     if request.method == "POST":
         form = SubscriberForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("author_subscribers_all")
+            sub_success = True
         else:
             errors = form.errors
     else:
         form = SubscriberForm()
+
+    if sub_success:
+        notify_on_subscription.delay(email_to)
+        return redirect("author_subscribers_all")
+
     context = {"form": form, "errors": errors}
     return render(request, "main/subscriber.html", context=context)
 
@@ -119,6 +129,15 @@ def authors_all(request):
     """Show a list of authors."""
     allauthors = Author.objects.all()
     return render(request, "main/authors_all.html", {"title": "Authors", "authors": allauthors})
+
+
+def subscribers_notify(request):
+    """Notify all subscribers."""
+    st = time()
+    notify_subs.delay()
+    exc_t = time() - st
+    print('Time of execution:', exc_t)
+    return redirect('homepage')
 
 
 def api_subscribe(request):
