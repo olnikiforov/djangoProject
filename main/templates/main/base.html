@@ -6,12 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/main.css">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
 <nav class="nav justify-content-between bg-success">
     <a class="p-4 text-black-50 link-light" href="{% url "homepage" %}">Homepage</a>
-    <a class="p-4 text-black-50 link-light" href="{% url "about" %}">About</a>
+    <a class="p-4 text-black-50 link-light" href="{% url "posts_list" %}">Post List</a>
     <a class="p-4 text-black-50 link-light" href="{% url "posts" %}">Posts</a>
     <a class="p-4 text-black-50 link-light" href="{% url "post_create" %}">Posts create</a>
     <a class="p-4 text-black-50 link-light" href="{% url "authors_all" %}">Authors</a>
@@ -20,12 +21,37 @@
     <a class="p-4 text-black-50 link-light" href="{% url "books" %}">All Books</a>
     <a class="p-4 text-black-50 link-light" href="{% url "categories" %}">All Categories</a>
 </nav>
-<nav>
-<div class="p-4">
-    <div>
-      {% block content %}{% endblock %}
-    </div>
-  </div>
-</nav>
+
+<div class="content">
+  {% block content %}{% endblock %}
+</div>
+
+<div class="footer-dark">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-3 item">
+                    <h3>Contact us</h3>
+                    <ul>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'contact-us-create' %}">Send message</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-md-3 item">
+                    <h3>About</h3>
+                    <ul>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 item text">
+                    <h3>Blog</h3>
+                    <p>Blog of authors, their books and posts.</p>
+                </div>
+            </div>
+            <p class="copyright">Copyrights © 2021</p>
+        </div>
+    </footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 [flake8]
 max-line-length = 120
 application-import-names=app
-exclude = main/migrations/
+exclude = venv,tests.py,main/__init__,migrations,__init__.py
 import-order-style=google
 max-complexity = 10
 #ignore=D100

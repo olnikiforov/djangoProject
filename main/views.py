@@ -3,9 +3,11 @@ from time import time
 
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView
 from faker import Faker
 from main.forms import PostForm, SubscriberForm
-from main.models import Author, Book, Category, Post, Subscriber
+from main.models import Author, Book, Category, Contacts, Post, Subscriber
 from main.notify_service import notify
 from main.post_service import comment_method, post_all, post_find
 from main.subscribe_service import subscribe
@@ -141,6 +143,21 @@ def authors_all(request):
     """Show a list of authors."""
     allauthors = Author.objects.all()
     return render(request, "main/authors_all.html", {"title": "Authors", "authors": allauthors})
+
+
+class PostsListView(ListView):
+    """Show post list."""
+
+    queryset = Post.objects.all()
+    template_name = 'main/posts_list.html'
+
+
+class ContactsView(CreateView):
+    """Contact view window."""
+
+    success_url = reverse_lazy("home_page")
+    model = Contacts
+    fields = ("email_to", "topic", "text")
 
 
 def subscribers_notify(request):

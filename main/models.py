@@ -130,3 +130,11 @@ class Category(models.Model):
     def __str__(self):
         """Print method."""
         return self.name
+
+
+class Contacts(models.Model):
+    """Class Contacts."""
+
+    email_to = models.EmailField('Email to holders', max_length=70)
+    topic = models.CharField(max_length=150)
+    text = models.TextField()

@@ -14,6 +14,7 @@ urlpatterns = [
     path('post/create', views.post_create, name='post_create'),
     path('posts/update/<int:post_id>', views.post_update, name='post_update'),
     path('posts/<int:post_id>', views.post_show, name='post_show'),
+    path('posts/list/', views.PostsListView.as_view(), name='posts_list'),
 
     path('authors/new', views.authors_new, name='authors_new'),
     path('authors/all', views.authors_all, name='authors_all'),
@@ -24,6 +25,8 @@ urlpatterns = [
 
     path('books/all/', views.books, name='books'),
     path('categories/all/', views.categories, name='categories'),
+
+    path('contact-us/create/', views.ContactsView.as_view(), name='contact-us-create'),
 
     path('api/post', views.post_api, name='api_post'),
     path('api/subscribe', views.api_subscribe, name='api_subscribe'),
