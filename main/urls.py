@@ -15,6 +15,7 @@ urlpatterns = [
     path('posts/update/<int:post_id>', views.post_update, name='post_update'),
     path('posts/<int:post_id>', views.post_show, name='post_show'),
     path('posts/list/', views.PostsListView.as_view(), name='posts_list'),
+    path('posts/list/xlsx', views.DownloadPostsXLSX.as_view(), name='posts_xlsx'),
 
     path('authors/new', views.authors_new, name='authors_new'),
     path('authors/all', views.authors_all, name='authors_all'),
