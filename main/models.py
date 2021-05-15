@@ -166,6 +166,18 @@ class Category(models.Model):
         """Print method."""
         return self.name
 
+    def save(self, **kwargs):
+        """Save method."""
+        super().save()
+        key = self.__class__.cache_key()
+        cache.delete(key)
+
+    @classmethod
+    def cache_key(cls):
+        """Get Cache Key."""
+        dt = datetime.today().strftime('%Y-%m-%d')
+        key = f'{dt}'
+        return key
 
 class Contacts(models.Model):
     """Class Contacts."""
