@@ -179,6 +179,7 @@ class Category(models.Model):
         key = f'{dt}'
         return key
 
+
 class Contacts(models.Model):
     """Class Contacts."""
 
