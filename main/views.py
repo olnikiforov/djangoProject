@@ -1,10 +1,11 @@
 """All wiews of site."""
+import io
 from time import time
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, View
 from faker import Faker
 from main.forms import PostForm, SubscriberForm
 from main.models import Author, Book, Category, Contacts, Post, Subscriber
@@ -12,6 +13,7 @@ from main.notify_service import notify
 from main.post_service import comment_method, post_all, post_find
 from main.subscribe_service import subscribe
 from main.tasks import notify_on_subscription, notify_subs
+import xlsxwriter
 
 
 def index(request):
@@ -158,6 +160,32 @@ class ContactsView(CreateView):
     success_url = reverse_lazy("home_page")
     model = Contacts
     fields = ("email_to", "topic", "text")
+
+
+class DownloadPostsXLSX(View):
+    """Donwload posts in xlsx."""
+
+    def get(self, request):
+        """Get method."""
+        output = io.BytesIO()
+        wb = xlsxwriter.Workbook(output)
+        ws = wb.add_worksheet()
+        all_p = Post.objects.all()
+        counter = 0
+        for p in all_p:
+            counter = counter + 1
+            ws.write(counter, 0, p.title)
+        wb.close()
+        output.seek(0)
+
+        f_name = 'Posts.xlsx'
+        response = HttpResponse(
+            output,
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename=%s' % f_name
+
+        return response
 
 
 def subscribers_notify(request):
