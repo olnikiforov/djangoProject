@@ -78,6 +78,18 @@ def post_show(request, post_id):
                   {"title": pst.title, "pst": pst, "comments": comments, "comment_form": comment_form})
 
 
+def post_delete(request, post_id):
+    """Post delete."""
+    obj = get_object_or_404(Post, pk=post_id)
+    if request.method == "POST":
+        obj.delete()
+        return redirect('posts_all')
+    context = {
+        "post": obj
+    }
+    return render(request, 'main/posts_delete.html', context=context)
+
+
 def post_api(request):
     """Post api show."""
     posts = post_all()
@@ -121,6 +133,18 @@ def authors_new(request):
     fake = Faker()
     Author(name=fake.name(), email=fake.email()).save()
     return redirect("authors_all")
+
+
+def author_delete(request, author_id):
+    """Delete author."""
+    obj = get_object_or_404(Author, pk=author_id)
+    if request.method == "POST":
+        obj.delete()
+        return redirect('authors_all')
+    context = {
+        "author": obj
+    }
+    return render(request, 'main/delete_author.html', context=context)
 
 
 def author_subscribers_all(request):

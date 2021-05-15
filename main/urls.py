@@ -33,6 +33,9 @@ urlpatterns = [
 
     path('contact-us/create/', views.ContactsView.as_view(), name='contact-us-create'),
 
+    path('posts/delete/<int:post_id>/', views.post_delete, name='delete_posts'),
+    path('authors/delete/<int:author_id>/', views.author_delete, name='delete_author'),
+
     path('api/post', views.post_api, name='api_post'),
     path('api/subscribe', views.api_subscribe, name='api_subscribe'),
     path('api/authors/new', views.api_authors_new, name='api_authors_new'),
