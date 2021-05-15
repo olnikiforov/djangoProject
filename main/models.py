@@ -1,4 +1,7 @@
 """Models for site."""
+from datetime import datetime
+
+from django.core.cache import cache
 from django.db import models
 from django.utils.timezone import now
 
@@ -68,6 +71,19 @@ class Post(models.Model):
     def __str__(self):
         """Print method."""
         return self.title
+
+    def save(self, **kwargs):
+        """Save method."""
+        super().save()
+        key = self.__class__.cache_key()
+        cache.delete(key)
+
+    @classmethod
+    def cache_key(cls):
+        """Cache key method."""
+        dt = datetime.today().strftime('%Y-%m-%d')
+        key = f'{dt}'
+        return key
 
 
 class Logger(models.Model):
