@@ -21,6 +21,9 @@
     <a class="p-4 text-black-50 link-light" href="{% url "books" %}">All Books</a>
     <a class="p-4 text-black-50 link-light" href="{% url "categories" %}">All Categories</a>
     <a class="p-4 text-black-50 link-light" href="{% url "posts_xlsx" %}">Download Posts</a>
+    {% if request.user.is_authenticated %}
+    <a class="p-4 text-black-50 link-light" href="{% url "account:my_profile" %}">Account</a>
+    {% endif %}
 </nav>
 
 <div class="content">

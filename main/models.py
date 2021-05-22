@@ -33,6 +33,25 @@ class Author(models.Model):
         """Print full name."""
         return f'{self.name} {self.last_name}'
 
+    def save(self, **kwargs):
+        """Save method."""
+        super().save()
+        key = self.__class__.cache_key()
+        cache.delete(key)
+
+    def delete(self, **kwargs):
+        """Delete method."""
+        super().delete()
+        key = self.__class__.cache_key()
+        cache.delete(key)
+
+    @classmethod
+    def cache_key(cls):
+        """Save cache key."""
+        dt = datetime.today().strftime('%y-%m-%d')
+        key = f'{dt}'
+        return key
+
 
 class Subscriber(models.Model):
     """Class Subsriber."""
@@ -146,6 +165,19 @@ class Category(models.Model):
     def __str__(self):
         """Print method."""
         return self.name
+
+    def save(self, **kwargs):
+        """Save method."""
+        super().save()
+        key = self.__class__.cache_key()
+        cache.delete(key)
+
+    @classmethod
+    def cache_key(cls):
+        """Get Cache Key."""
+        dt = datetime.today().strftime('%Y-%m-%d')
+        key = f'{dt}'
+        return key
 
 
 class Contacts(models.Model):
