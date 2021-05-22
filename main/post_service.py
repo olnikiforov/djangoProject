@@ -1,11 +1,17 @@
 """Post Service."""
+from django.core.cache import cache
 from main.forms import CommentsForm
 from main.models import Post
 
 
 def post_all():
     """Take all from class Post."""
-    objects_all = Post.objects.all()
+    key = Post().__class__.cache_key()
+    if key in cache:
+        objects_all = cache.get(key)
+    else:
+        objects_all = Post.objects.all()
+        cache.set(key, objects_all, 30)
     return objects_all
 
 
