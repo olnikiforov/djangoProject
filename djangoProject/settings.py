@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 from celery.schedules import crontab
@@ -25,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '*f9&r-fv4nglp!je_77o_a%gy6@y(-4-j&o_krtsw_nj-*ywrk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -158,3 +159,9 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(minute=0, hour=9),
     },
 }
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'main/static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, '', 'static_content', 'static')
