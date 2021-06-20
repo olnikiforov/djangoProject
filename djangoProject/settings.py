@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '*f9&r-fv4nglp!je_77o_a%gy6@y(-4-j&o_krtsw_nj-*ywrk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -140,6 +140,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DOMAIN = 'http://0.0.0.0:8000'
+
+LOGIN_REDIRECT_URL = '/'
+
 
 # Celery
 

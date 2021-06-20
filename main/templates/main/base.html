@@ -20,9 +20,13 @@
     <a class="p-4 text-black-50 link-light" href="{% url "subscribers_notify" %}">Email Subscribers</a>
     <a class="p-4 text-black-50 link-light" href="{% url "books" %}">All Books</a>
     <a class="p-4 text-black-50 link-light" href="{% url "categories" %}">All Categories</a>
-    <a class="p-4 text-black-50 link-light" href="{% url "posts_xlsx" %}">Download Posts</a>
+    <a class="p-4 text-black-50  link-light" href="{% url "posts_xlsx" %}">Download Posts</a>
     {% if request.user.is_authenticated %}
-    <a class="p-4 text-black-50 link-light" href="{% url "account:my_profile" %}">Account</a>
+        <a class="p-4 text-black-50 link-light" href="{% url "account:my_profile" %}">Account</a>
+        <a class="p-4 text-black-50 link-light" href="{% url "account:change_password" %}">Change password</a>
+        <a class="p-4 text-black-50 link-light" href="{% url "account:user_logout" %}">Log out</a>
+        <a class="p-4 text-black-50 link-light" href="{% url "account:sign_up" %}">Sign up</a>
+        <a class="p-4 text-black-50 link-light" href="{% url "account:user_login" %}">Log in</a>
     {% endif %}
 </nav>
 
