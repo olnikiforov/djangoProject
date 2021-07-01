@@ -134,3 +134,4 @@ dmypy.json
 
 # VENV
 .venv/
+/up_on_digitalocean_servers.sh
