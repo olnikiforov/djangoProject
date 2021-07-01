@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import mimetypes
 import os
 from pathlib import Path
 
@@ -23,13 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*f9&r-fv4nglp!je_77o_a%gy6@y(-4-j&o_krtsw_nj-*ywrk'
+#SECRET_KEY = '*f9&r-fv4nglp!je_77o_a%gy6@y(-4-j&o_krtsw_nj-*ywrk'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+#
+#ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = ['*']
+DEBUG = os.environ.get('DEBUG_MODE') == '1'
 
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(':')
 
 # Application definition
 
@@ -138,6 +143,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+mimetypes.add_type("text/css", ".css", True)
+mimetypes.add_type("text/html", ".css", True)
+
+
 STATIC_URL = '/static/'
 
 DOMAIN = 'http://0.0.0.0:8000'
@@ -173,4 +182,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'main/static')
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, '', 'static_content', 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, '', 'static_content', 'static')
+
+STATIC_ROOT = os.path.join('/tmp', 'static_content', 'static')
+
+if DEBUG:
+    import socket
+
+    DEBUG_TOOLBAR_PATCH_SETTINGS = True
+    INTERNAL_IPS = [socket.gethostbyname(socket.gethostname())[:-1] + '1']
+
+
