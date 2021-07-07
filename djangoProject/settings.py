@@ -48,8 +48,7 @@ INSTALLED_APPS = [
 
 CACHE = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': 'memcached:11211',
     }
 }
 
@@ -148,7 +147,12 @@ LOGIN_REDIRECT_URL = '/'
 
 # Celery
 
-CELERY_BROKER_URL = 'amqp://localhost'
+
+CELERY_BROKER_URL = 'amqp://{0}:{1}@{2}:5672'.format(
+    os.environ.get('RABBITMQ_DEFAULT_USER', "guest"),
+    os.environ.get('RABBITMQ_DEFAULT_PASS', "guest"),
+    os.environ.get('RABBITMQ_DEFAULT_HOST', "localhost"),
+)
 
 CELERY_TIMEZONE = 'Europe/Kiev'
 CELERY_TASK_TRACK_STARTED = True
