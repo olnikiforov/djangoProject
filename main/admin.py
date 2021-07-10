@@ -1,5 +1,5 @@
 """Admin of Django."""
-from account.models import User
+from account.models import Ava, Profile, User
 from django.contrib import admin
 from main.models import Author, Comments, Logger, Post, Subscriber
 
@@ -19,3 +19,5 @@ admin.site.register(Subscriber)
 admin.site.register(Logger)
 admin.site.register(Comments, CommentAdmin)
 admin.site.register(User)
+admin.site.register(Ava)
+admin.site.register(Profile)
