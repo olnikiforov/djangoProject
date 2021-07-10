@@ -40,3 +40,6 @@ dkr-bld:
 
 dkr-st:
 	docker container stop ssb
+
+urls:
+	python3 manage.py show_urls

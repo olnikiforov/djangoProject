@@ -1,6 +1,6 @@
 """Urls of site."""
 # from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from django.views.decorators import cache
 from django.views.generic import TemplateView
 
@@ -39,4 +39,5 @@ urlpatterns = [
     path('api/post', views.post_api, name='api_post'),
     path('api/subscribe', views.api_subscribe, name='api_subscribe'),
     path('api/authors/new', views.api_authors_new, name='api_authors_new'),
+    path('api/v1/', include('api.urls')),
 ]
