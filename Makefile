@@ -1,19 +1,33 @@
+include .env
+MANAGE = python3 manage.py
+PROJECT_DIR = $(shell pwd)
+WSGI_PORT=8000
+RUN_COMMAND=gunicorn-run
+
+
 run:
-	python manage.py runserver 0.0.0.0:8000
+	$(MANAGE) runserver 0.0.0.0:$(WSGI_PORT)
 
 make-migration:
-	python manage.py makemigrations
+	$(MANAGE) makemigrations
 
 migrate:
-	python manage.py migrate
+	$(MANAGE)manage.py migrate
 
 lint:
 	flake8 .
+
 gunicorn_run_8081:
 	gunicorn -w 4 -b 0.0.0.0:8081 --chdir $(shell pwd) djangoProject.wsgi --timeout 60 --log-level debug --max-requests 10000
 
+celery-run:
+	celery -A djangoProject worker -l INFO
+
+celerybeat-run:
+	rm -rf celerybeat.pid && celery -A djangoProject beat -l INFO
+
 collect_static:
-	python manage.py collectstatic
+	$(MANAGE)collectstatic
 
 run_nginx:
 	systemctl start nginx
@@ -40,6 +54,3 @@ dkr-bld:
 
 dkr-st:
 	docker container stop ssb
-
-urls:
-	python3 manage.py show_urls
