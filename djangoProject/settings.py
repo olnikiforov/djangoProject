@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'account',
     'django_extensions',
     'rest_framework',
+    'django_filters',
+    'drf_yasg',
 ]
 
 CACHE = {
@@ -83,6 +85,12 @@ TEMPLATES = [
         },
     },
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 

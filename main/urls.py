@@ -15,8 +15,8 @@ urlpatterns = [
     path('post/create', views.post_create, name='post_create'),
     path('posts/update/<int:post_id>', views.post_update, name='post_update'),
     path('posts/<int:post_id>', views.post_show, name='post_show'),
-    # path('posts/list/', views.PostsListView.as_view(), name='posts_list'),
-    path('posts/all/', cache.cache_page(120)(views.PostsListView.as_view()), name='posts_list'),
+    path('posts/list/', views.PostsListView.as_view(), name='posts_list'),
+    #path('posts/all/', cache.cache_page(120)(views.PostsListView.as_view()), name='posts_list'),
     path('posts/list/xlsx', views.DownloadPostsXLSX.as_view(), name='posts_xlsx'),
 
     path('authors/new', views.authors_new, name='authors_new'),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('author/subscribers/notify', views.subscribers_notify, name='subscribers_notify'),
 
     path('books/all/', views.books, name='books'),
+    path('books/list/', views.BooksListView.as_view(), name='books_list'),
     # path('categories/all/', views.categories, name='categories'),
     path('categories/all/', cache.cache_page(120)(views.categories), name='categories'),
 

@@ -6,7 +6,9 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, View
+from django_filters.views import FilterView
 from faker import Faker
+from main.filters import BooksFilter, PostFilter
 from main.forms import PostForm, SubscriberForm
 from main.models import Author, Book, Category, Contacts, Post, Subscriber
 from main.notify_service import notify
@@ -171,12 +173,23 @@ def authors_all(request):
     return render(request, "main/authors_all.html", {"title": "Authors", "authors": allauthors})
 
 
-class PostsListView(ListView):
+class PostsListView(FilterView):
     """Show post list."""
 
-    queryset = Post.objects.all()
+    paginate_by = 10
     template_name = 'main/posts_list.html'
+    filterset_class = PostFilter
 
+    def get_queryset(self):
+        queryset = Post.objects.all()
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["get_params"] = '&'.join(f"{key}={val}" for key, val in self.request.GET.items() if key != "page")
+        context["cnt"] = context['object_list'].count()
+        context["title"] = "All posts"
+        return context
 
 class ContactsView(CreateView):
     """Contact view window."""
@@ -184,6 +197,25 @@ class ContactsView(CreateView):
     success_url = reverse_lazy("home_page")
     model = Contacts
     fields = ("email_to", "topic", "text")
+
+
+
+
+class BooksListView(FilterView):
+    paginate_by = 10
+    template_name = 'main/books_filter.html'
+    filterset_class = BooksFilter
+
+    def get_queryset(self):
+        queryset = Book.objects.all().only("title", "category").select_related("category")
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["get_params"] = '&'.join(f"{key}={val}" for key, val in self.request.GET.items() if key != "page")
+        context["cnt"] = context['object_list'].count()
+        context["title"] = "All books"
+        return context
 
 
 class DownloadPostsXLSX(View):
