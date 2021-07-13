@@ -57,7 +57,8 @@ class ShowProfilePageView(DetailView):
 class ActivateUserView(View):
     """Activate user."""
 
-    def get(self, request, confirmation_token):
+    @staticmethod
+    def get(request, confirmation_token):
         """Get method."""
         user = get_object_or_404(User, confirmation_token=confirmation_token)
         user.is_active = True
