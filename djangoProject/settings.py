@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'main',
     'account',
     'django_extensions',
+    'rest_framework',
 ]
 
 CACHE = {
