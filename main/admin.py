@@ -12,12 +12,19 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ("activate", "created", "updated")
     search_fields = ("subs_id", "body")
 
+class UserAdmin(admin.ModelAdmin):
+    """User admin class"""
+
+    list_display = ("email", "first_name")
+    list_filter = ("is_active", "is_staff",)
+    readonly_fields = ("confirmation_token", "is_active", "date_joined", "last_login")
+
 
 admin.site.register(Author)
 admin.site.register(Post)
 admin.site.register(Subscriber)
 admin.site.register(Logger)
 admin.site.register(Comments, CommentAdmin)
-admin.site.register(User)
+admin.site.register(User, UserAdmin)
 admin.site.register(Ava)
 admin.site.register(Profile)

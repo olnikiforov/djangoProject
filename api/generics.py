@@ -1,5 +1,5 @@
 """Generics of API."""
-from main.models import Post
+from main.models import Book, Post
 from rest_framework import serializers
 
 
@@ -19,4 +19,18 @@ class PostSerializer(serializers.ModelSerializer):
             'updated',
             'created',
             'get_mood_display'
+        )
+
+
+class BooksSerializer(serializers.ModelSerializer):
+    """Serializer class."""
+
+    class Meta:
+        """Meeta class."""
+        model = Book
+        fields = (
+            'id',
+            'title',
+            'author',
+            'category',
         )
