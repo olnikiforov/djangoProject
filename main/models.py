@@ -89,7 +89,7 @@ class Post(models.Model):
 
     def __str__(self):
         """Print method."""
-        return self.title
+        return f"{self.title} {self.description}"
 
     def save(self, **kwargs):
         """Save method."""
