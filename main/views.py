@@ -199,7 +199,11 @@ class ContactsView(CreateView):
     fields = ("email_to", "topic", "text")
 
 
+class AuthorsListView2(ListView):
+    """Show list of posts ."""
 
+    model = Author
+    template_name = 'main/author_list_js.html'
 
 class BooksListView(FilterView):
     paginate_by = 10
