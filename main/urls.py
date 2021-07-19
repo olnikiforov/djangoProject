@@ -32,6 +32,8 @@ urlpatterns = [
     # path('categories/all/', views.categories, name='categories'),
     path('categories/all/', cache.cache_page(120)(views.categories), name='categories'),
 
+    path('posts-page/', TemplateView.as_view(template_name='main/posts_page.html'), name='posts_page'),
+
     path('contact-us/create/', views.ContactsView.as_view(), name='contact-us-create'),
 
     path('posts/delete/<int:post_id>/', views.post_delete, name='delete_posts'),
